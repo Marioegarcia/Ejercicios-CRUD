@@ -1,33 +1,35 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const moment = require("moment");
 
 let medicionesSchema = new Schema({
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' },
-    nombre:String,
-    estadoCivil: String,
-    direccion: String,
-    ocupacion: String,
-    sexo: String,
-    edad:String,
-    createDate: Date,
-    gpoSanguineo: String,
-    motivo:String,
-    peso: { type: Number },
-    altura: {type: Number},
-    pI:Number,
-    pM:Number,
-    glu:Number,
-    ta:Number,
-    fc: Number,
-    fr:Number,
-    imc:Number,
-    cadera:{type: Number},
-    cintura:{type: Number},
-    icc:Number,
-    medicamentos:String,
-    malestares:String,
-    actividadFisica:String,
-    habitos:String,
+    estadoCivil: { type: String, default:"Estado civil" },
+    direccion: { type: String, default:"Direccion" },
+    ocupacion: { type: String, default:"Ocupacion" },
+    createDate: {
+        type: String, 
+        default: () => moment().locale('es-mx').format('LLLL')
+    },
+    gpoSanguineo: { type: String, default:"Grupo sanguineo" },
+    motivo:{ type: String, default:"Motivo" },
+    peso: { type: Number,default: 0 },
+    altura: {type: Number,default: 0 },
+    pI:{type: Number},
+    pM:{type: Number},
+    glu:{type: Number,default: 0 },
+    ta:{type: Number,default: 0 },
+    fc:{type: Number},
+    fr:{type: Number },
+    imc:{type: Number},
+    cadera:{type: Number },
+    cintura:{type: Number },
+    icc:{type: Number },
+    suplementos: String,
+    medicamentos:{type: String },
+    malestares:{type: String},
+    actividadFisica:{type: String},
+    habitos:{type: String},
     indicadoresDieteticos: String,
     modificacionA: String,
     alergias: String,
@@ -35,10 +37,10 @@ let medicionesSchema = new Schema({
     afterdieta: String,
     azucar:String,
     recordatorio24H: String,
-    planIndicado:String
-
+    planIndicado:String,
     
     
+  
 });
 
 

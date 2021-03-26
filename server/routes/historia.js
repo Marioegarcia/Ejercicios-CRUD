@@ -10,7 +10,7 @@ const api = express.Router();
 api.post('/crear-historia', HistoriaController.crearHistoria);
 
 
-
+api.get('/get-historia/:id', HistoriaController.getHistoria);
 
 
 

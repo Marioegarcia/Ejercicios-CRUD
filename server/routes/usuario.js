@@ -1,7 +1,8 @@
 const express = require("express");
 
 const _ = require('underscore');
-
+const Usuario = require("../models/usuario");
+const bcrypt = require('bcrypt');
 const UserController = require("../controllers/user");
 
 
@@ -54,7 +55,7 @@ api.get("/usuario" ,(req, res) => {
 });
 
 
-api.post("/usuario", verificaToken , function (req, res) {
+api.post("/usuario",function (req, res) {
  const body = req.body;
   
   
@@ -64,14 +65,6 @@ api.post("/usuario", verificaToken , function (req, res) {
     password: bcrypt.hashSync(body.password, 10),
     role: body.role,
   });
-  
-  // const usuario = new Usuario();
-  
-  // const { nombre,email, password } = req.body;
-  // usuario.nombre = nombre;
-  // usuario.email = email.toLowerCase();
-  // console.log(body);
-//   user.active = false;
 
     usuario.save((err, usuarioDB) => {
         if (err) {

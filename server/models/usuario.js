@@ -45,8 +45,8 @@ let usuarioSchema = new Schema({
   google: {
     type: Boolean,
     default: false,
-  },
-  usuario: { type: Schema.Types.ObjectId, ref: 'Dieta' },
+  }
+  
 
 });
 

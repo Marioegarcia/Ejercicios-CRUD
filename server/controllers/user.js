@@ -9,8 +9,8 @@ function signUp(req, res) {
   const user = new User();
   const saltRounds = 10;
   const {  nombre,lastname,age,altura,peso,genero,email, password, repeatPassword } = req.body;
-  user.nombre = nombre;
-  user.lastname = lastname;
+  user.nombre = nombre.toLowerCase();
+  user.lastname = lastname.toLowerCase();
   user.email = email.toLowerCase();
   user.age = age;
   user.altura = altura;
@@ -169,9 +169,9 @@ function getUsers(req, res) {
 }
 
 function getUser(req,res) {
-  let termino = req.params.termino.toUpperCase();
+  let termino = req.params.termino.toLowerCase();
   let regex = new RegExp(termino, 'i')
-  User.find({nombre: regex}).then(users => {
+  User.find({ $or: [ {nombre: regex}, {lastname: regex}, {email: regex} ]}).then(users => {
     if (!users) {
       res.status(404).send({ message: "No se ha encontrado ningun usuario." });
     } else {
@@ -200,7 +200,11 @@ function getPaciente(req,res) {
 function updateUser(req,res) {
   let userData = req.body;
   userData.email = req.body.email.toLowerCase();
-  
+  userData.nombre = req.body.nombre.toLowerCase();
+  userData.lastname = req.body.lastname.toLowerCase();
+
+  console.log(userData.nombre);
+  console.log(userData.lastname);
   User.findByIdAndUpdate({_id: userData.id}, userData, (err, userUpdate) => {
     if (err) {
       res.status(500).send({ message: "Error del servidor." });
@@ -218,7 +222,7 @@ function updateUser(req,res) {
 }
 
 function updateDieta(req,res) {
-  
+ 
   let body = req.body;
   console.log(req.params);
   console.log(body);
@@ -238,35 +242,7 @@ function getUsersActive(req, res) {
     }
   });
 }
-// api.get("/usuario" ,(req, res) => {
 
-//   let desde = req.query.desde || 0;
-//   desde = Number(desde);
-
-//   let limite = req.query.limite || 5;
-//   limite = Number(limite);
-
-//   Usuario.find({ estado:true } , 'nombre email role estado img google, password')
-//       // .skip(desde)
-//       // .limit(limite)
-//       .exec((err,usuarios) => {
-//         if(err){
-//           return res.status(400).json({
-//             ok:false,
-//             err
-//           });
-//         }
-//         Usuario.count({estado:true}, (err,conteo) => {
-//           res.json({
-//             ok:true,
-//             usuarios,
-//             cuantos:conteo
-//           });
-//         });
-        
-
-//       })
-// });
 
 
 module.exports = {
